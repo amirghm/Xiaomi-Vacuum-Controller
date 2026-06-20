@@ -2,7 +2,7 @@
 
 Local control for Xiaomi and Dreame robot vacuums via the MIoT protocol.
 
-Control your vacuum from Python, build custom dashboards, or integrate with AI agents — all without the cloud.
+Control your vacuum from Python, build custom dashboards, or integrate with AI agents. All without the cloud.
 
 ## 🏠 Use Cases
 
@@ -116,7 +116,7 @@ Tested:
 
 Newer Xiaomi vacuums dropped support for the classic `miio` RPC protocol. Commands like `get_status` and `get_prop` timeout with `user ack timeout`.
 
-This library uses the **MIoT action** protocol instead — the same one the Mi Home app uses internally. It fetches the device spec from Xiaomi's official spec database and maps service/property IDs automatically.
+This library uses the **MIoT action** protocol instead, the same one the Mi Home app uses internally. It fetches the device spec from Xiaomi's official spec database and maps service/property IDs automatically.
 
 ## 🤝 Contributing
 
