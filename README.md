@@ -2,7 +2,7 @@
 
 Local control for Xiaomi and Dreame robot vacuums via the MIoT protocol.
 
-If your vacuum gives you `user ack timeout` when you try to control it locally — this library fixes that. Newer models (2023+) dropped the classic `miio` protocol. This uses **MIoT** instead, the same protocol the Mi Home app uses.
+If your vacuum gives you `user ack timeout` when using classic `miio` commands — this library is the fix.
 
 ## Install
 
@@ -10,14 +10,20 @@ If your vacuum gives you `user ack timeout` when you try to control it locally �
 pip install xiaomi-vacuum
 ```
 
-## Usage
+Or from source:
 
-### Python
+```bash
+git clone https://github.com/amirghm/Xiaomi-Vacuum-Controller.git
+cd Xiaomi-Vacuum-Controller
+pip install .
+```
+
+## Quick Start
 
 ```python
 from xiaomi_vacuum import XiaomiVacuum
 
-vac = XiaomiVacuum("192.168.1.100", "your_32char_token", "xiaomi.vacuum.d109gl")
+vac = XiaomiVacuum("192.168.1.100", "your_token_here", "xiaomi.vacuum.d109gl")
 
 vac.start()
 vac.stop()
@@ -34,15 +40,13 @@ xiaomi-vacuum --ip 192.168.1.100 --token YOUR_TOKEN --model xiaomi.vacuum.d109gl
 xiaomi-vacuum --ip 192.168.1.100 --token YOUR_TOKEN --model xiaomi.vacuum.d109gl start
 ```
 
-## Setup
-
-### Get your token
+## Finding Your Token
 
 Use [Xiaomi Cloud Tokens Extractor](https://github.com/PiotrMachowski/Xiaomi-cloud-tokens-extractor) to get your device token.
 
-### Configuration
+## Configuration
 
-Create `~/.xiaomi-vacuum.json`:
+Instead of passing token/model every time, create `~/.xiaomi-vacuum.json`:
 
 ```json
 {
@@ -51,15 +55,15 @@ Create `~/.xiaomi-vacuum.json`:
 }
 ```
 
-Or set environment variables:
+Or use environment variables:
 
 ```bash
-export XIAOMI_VACUUM_TOKEN=*** XIAOMI_VACUUM_MODEL="xiaomi.vacuum.d109gl"
+export XIAOMI_VACUUM_TOKEN="***" XIAOMI_VACUUM_MODEL="xiaomi.vacuum.d109gl"
 ```
 
 ## Supported Devices
 
-Any Xiaomi/Dreame vacuum with a MIoT spec on [miot-spec.org](https://miot-spec.org). The library fetches the spec automatically.
+Any Xiaomi/Dreame vacuum with a MIoT spec on [miot-spec.org](https://miot-spec.org). The library auto-fetches the spec for your model.
 
 Tested:
 - Xiaomi Robot Vacuum X20 Max (`xiaomi.vacuum.d109gl`)
