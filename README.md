@@ -2,7 +2,7 @@
 
 Local control for Xiaomi and Dreame robot vacuums via the MIoT protocol.
 
-If your vacuum gives you `user ack timeout` when using classic `miio` commands — this library is the fix.
+Control your vacuum from Python, build custom dashboards, or integrate with AI agents — all without the cloud.
 
 ## 🏠 Use Cases
 
