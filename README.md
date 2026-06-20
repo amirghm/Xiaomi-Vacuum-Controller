@@ -15,6 +15,23 @@ Control your vacuum from Python, build custom dashboards, or integrate with AI a
 - **Status monitoring**: Get real-time battery, cleaning progress, and consumable status
 - **Energy optimization**: Track battery usage and optimize cleaning patterns
 
+## 📋 Requirements
+
+**Python version:**
+- Python 3.9 or higher
+
+**Dependencies** (installed automatically with pip):
+- `python-miio` >= 0.5.12 (handles the MIoT protocol communication)
+- `requests` >= 2.28.0 (fetches device specs from miot-spec.org)
+
+**System requirements:**
+- Network access to your vacuum (same WiFi network)
+- The vacuum must be powered on and connected to your network
+
+**Optional:**
+- `pytest` (for running tests)
+- `ruff` (for code linting)
+
 ## 🚀 Install
 
 ```bash
@@ -56,7 +73,6 @@ xiaomi-vacuum --ip 192.168.1.100 --token YOUR_TOKEN --model xiaomi.vacuum.d109gl
 ### AI Agent Integration
 
 ```python
-# Example: Simple AI agent for vacuum control
 from xiaomi_vacuum import XiaomiVacuum
 
 def handle_command(command: str, vac: XiaomiVacuum) -> str:
