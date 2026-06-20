@@ -6,7 +6,7 @@ import os
 from .device import XiaomiVacuum
 
 
-def resolve_token(token_arg: str | None) -> str:
+def resolve_token(token_arg):
     if token_arg:
         return token_arg
     env = os.environ.get("XIAOMI_VACUUM_TOKEN")
@@ -19,7 +19,7 @@ def resolve_token(token_arg: str | None) -> str:
     raise SystemExit("token not found. pass --token, set XIAOMI_VACUUM_TOKEN, or create ~/.xiaomi-vacuum.json")
 
 
-def resolve_model(model_arg: str | None, info: dict) -> str:
+def resolve_model(model_arg, info):
     if model_arg:
         return model_arg
     env = os.environ.get("XIAOMI_VACUUM_MODEL")
@@ -35,15 +35,24 @@ def resolve_model(model_arg: str | None, info: dict) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="xiaomi-vacuum", description="Control Xiaomi/Dreame robot vacuums via MIoT")
+    parser = argparse.ArgumentParser(
+        prog="xiaomi-vacuum",
+        description="Control Xiaomi/Dreame robot vacuums via MIoT",
+    )
     parser.add_argument("--ip", required=True, help="vacuum IP address")
     parser.add_argument("--token", help="device token (or set XIAOMI_VACUUM_TOKEN)")
     parser.add_argument("--model", help="device model (or set XIAOMI_VACUUM_MODEL)")
-    parser.add_argument("command", nargs="?", default="status",
-                        choices=["status", "start", "stop", "pause", "resume", "home",
-                                 "info", "services", "list-props"])
-    parser.add_argument("--set", nargs=2, metavar=("PROPERTY", "VALUE"), help="set a property value")
-    parser.add_argument("--get", metavar="PROPERTY", help="read a property value")
+    parser.add_argument(
+        "command",
+        nargs="?",
+        default="status",
+        choices=[
+            "status", "start", "stop", "pause", "resume", "home",
+            "info", "services", "list-props",
+        ],
+    )
+    parser.add_argument("--set", nargs=2, metavar=("PROPERTY", "VALUE"))
+    parser.add_argument("--get", metavar="PROPERTY")
     parser.add_argument("--json", action="store_true", help="output as JSON")
 
     args = parser.parse_args()

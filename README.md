@@ -13,8 +13,8 @@ pip install xiaomi-vacuum
 Or from source:
 
 ```bash
-git clone https://github.com/amirghm/xiaomi-vacuum
-cd xiaomi-vacuum
+git clone https://github.com/amirghm/Xiaomi-Vacuum-Controller.git
+cd Xiaomi-Vacuum-Controller
 pip install .
 ```
 
@@ -60,8 +60,7 @@ Instead of passing token/model every time, create `~/.xiaomi-vacuum.json`:
 Or use environment variables:
 
 ```bash
-export XIAOMI_VACUUM_TOKEN="your_32char_token"
-export XIAOMI_VACUUM_MODEL="xiaomi.vacuum.d109gl"
+export XIAOMI_VACUUM_TOKEN="your...port XIAOMI_VACUUM_MODEL="xiaomi.vacuum.d109gl"
 ```
 
 ## Supported Devices

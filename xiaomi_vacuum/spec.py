@@ -1,14 +1,12 @@
 import requests
-import json
 
 
 SPEC_CACHE = {}
 
 
-def fetch_spec(model: str) -> dict:
+def fetch_spec(model):
     if model in SPEC_CACHE:
         return SPEC_CACHE[model]
-
     url = f"https://miot-spec.org/miot-spec-v2/instance?type=urn:miot-spec-v2:device:vacuum:0000A006:{model}:1"
     resp = requests.get(url, timeout=10)
     resp.raise_for_status()
@@ -17,11 +15,10 @@ def fetch_spec(model: str) -> dict:
     return data
 
 
-def parse_services(spec: dict) -> dict:
+def parse_services(spec):
     services = {}
     for svc in spec.get("services", []):
         sid = svc["iid"]
-        name = svc["description"]
         props = {}
         for p in svc.get("properties", []):
             props[p["iid"]] = {
@@ -39,7 +36,7 @@ def parse_services(spec: dict) -> dict:
                 "out": a.get("out", []),
             }
         services[sid] = {
-            "name": name,
+            "name": svc["description"],
             "properties": props,
             "actions": actions,
         }

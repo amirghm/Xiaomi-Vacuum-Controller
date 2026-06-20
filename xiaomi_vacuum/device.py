@@ -3,7 +3,7 @@ from .spec import fetch_spec, parse_services
 
 
 class XiaomiVacuum:
-    def __init__(self, ip: str, token: str, model: str = None):
+    def __init__(self, ip, token, model=None):
         self.ip = ip
         self.token = token
         self.model = model
@@ -13,19 +13,19 @@ class XiaomiVacuum:
         if model:
             self.load_spec(model)
 
-    def load_spec(self, model: str):
+    def load_spec(self, model):
         raw = fetch_spec(model)
         self.services = parse_services(raw)
         self.model = model
 
-    def _find_service(self, keyword: str) -> int | None:
+    def _find_service(self, keyword):
         keyword = keyword.lower()
         for sid, svc in self.services.items():
             if keyword in svc["name"].lower():
                 return sid
         return None
 
-    def _find_action(self, service_id: int, keyword: str) -> int | None:
+    def _find_action(self, service_id, keyword):
         keyword = keyword.lower()
         svc = self.services.get(service_id, {})
         for aid, act in svc.get("actions", {}).items():
@@ -33,7 +33,7 @@ class XiaomiVacuum:
                 return aid
         return None
 
-    def _find_property(self, service_id: int, keyword: str) -> int | None:
+    def _find_property(self, service_id, keyword):
         keyword = keyword.lower()
         svc = self.services.get(service_id, {})
         for pid, prop in svc.get("properties", {}).items():
@@ -41,17 +41,17 @@ class XiaomiVacuum:
                 return pid
         return None
 
-    def action(self, siid: int, aiid: int, params=None):
+    def action(self, siid, aiid, params=None):
         return self.proto.send("action", {
             "siid": siid,
             "aiid": aiid,
             "in": params or [],
         })
 
-    def get_properties(self, props: list[dict]):
+    def get_properties(self, props):
         return self.proto.send("get_properties", props)
 
-    def set_property(self, siid: int, piid: int, value):
+    def set_property(self, siid, piid, value):
         return self.proto.send("set_properties", [{
             "siid": siid,
             "piid": piid,
@@ -61,34 +61,34 @@ class XiaomiVacuum:
     def info(self):
         return self.proto.send("miIO.info", [])
 
-    def vacuum_action(self, name: str):
+    def vacuum_action(self, name):
         sid = self._find_service("vacuum") or self._find_service("robot cleaner")
         if not sid:
-            raise RuntimeError("vacuum service not found in spec")
+            raise RuntimeError("vacuum service not found")
         aid = self._find_action(sid, name)
         if not aid:
-            raise RuntimeError(f"action '{name}' not found in vacuum service")
+            raise RuntimeError(f"action '{name}' not found")
         return self.action(sid, aid)
 
-    def read_property(self, service_keyword: str, property_keyword: str):
+    def read_property(self, service_keyword, property_keyword):
         sid = self._find_service(service_keyword)
         if not sid:
             raise RuntimeError(f"service '{service_keyword}' not found")
         pid = self._find_property(sid, property_keyword)
         if not pid:
-            raise RuntimeError(f"property '{property_keyword}' not found in service '{service_keyword}'")
+            raise RuntimeError(f"property '{property_keyword}' not found")
         result = self.get_properties([{"siid": sid, "piid": pid}])
         if result and result[0].get("code") == 0:
             return result[0]["value"]
         raise RuntimeError(f"failed to read property: {result}")
 
-    def write_property(self, service_keyword: str, property_keyword: str, value):
+    def write_property(self, service_keyword, property_keyword, value):
         sid = self._find_service(service_keyword)
         if not sid:
             raise RuntimeError(f"service '{service_keyword}' not found")
         pid = self._find_property(sid, property_keyword)
         if not pid:
-            raise RuntimeError(f"property '{property_keyword}' not found in service '{service_keyword}'")
+            raise RuntimeError(f"property '{property_keyword}' not found")
         return self.set_property(sid, pid, value)
 
     def start(self):
@@ -127,12 +127,10 @@ class XiaomiVacuum:
     def list_services(self):
         output = []
         for sid, svc in self.services.items():
-            props = list(svc["properties"].keys())
-            actions = list(svc["actions"].keys())
             output.append({
                 "iid": sid,
                 "name": svc["name"],
-                "properties": len(props),
-                "actions": len(actions),
+                "properties": len(svc["properties"]),
+                "actions": len(svc["actions"]),
             })
         return output

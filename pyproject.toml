@@ -19,8 +19,8 @@ dependencies = [
 dev = ["pytest", "ruff"]
 
 [project.urls]
-Homepage = "https://github.com/amirghm/xiaomi-vacuum"
-Issues = "https://github.com/amirghm/xiaomi-vacuum/issues"
+Homepage = "https://github.com/amirghm/Xiaomi-Vacuum-Controller"
+Issues = "https://github.com/amirghm/Xiaomi-Vacuum-Controller/issues"
 
 [tool.setuptools.packages.find]
 include = ["xiaomi_vacuum*"]
