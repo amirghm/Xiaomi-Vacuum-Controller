@@ -1,3 +1,21 @@
+Metadata-Version: 2.4
+Name: xiaomi-vacuum
+Version: 0.1.0
+Summary: Local control for Xiaomi/Dreame robot vacuums via MIoT protocol
+Author: Amir Ghasemi
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/amirghm/Xiaomi-Vacuum-Controller
+Project-URL: Issues, https://github.com/amirghm/Xiaomi-Vacuum-Controller/issues
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: python-miio>=0.5.12
+Requires-Dist: requests>=2.28.0
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Dynamic: license-file
+
 # xiaomi-vacuum
 
 Local control for Xiaomi and Dreame robot vacuums via the MIoT protocol.
